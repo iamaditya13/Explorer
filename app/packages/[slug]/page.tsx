@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, use } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Clock, MapPin, Check, X, Heart, Phone, Mail, Share2, PlayCircle, Images, Video, Info, Map, Binoculars, Hotel, CheckCircle2, HelpCircle, Utensils, Bus, UserCheck, ListOrdered, ChevronDown, Download, Send, XCircle, Star, Moon, AlertCircle, CreditCard } from "lucide-react"
@@ -14,22 +14,22 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useAuth } from "@/lib/auth"
 import { LoginDialog } from "@/components/login-dialog"
 
-export default function PackageDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params)
+export default function PackageDetailPage({ params }: { params: { slug: string } }) {
   const [pkg, setPkg] = useState<Package | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showBookingForm, setShowBookingForm] = useState(false)
+  const [isItineraryExpanded, setIsItineraryExpanded] = useState(false)
   const { toggleFavorite, isFavorite, user } = useAuth()
   const [showInquiryForm, setShowInquiryForm] = useState(false)
   const [showLoginDialog, setShowLoginDialog] = useState(false)
 
   useEffect(() => {
     const data = read()
-    if (data && resolvedParams.slug) {
-      const foundPackage = data.siteContent.packages.find((p) => p.slug === resolvedParams.slug)
+    if (data && params.slug) {
+      const foundPackage = data.siteContent.packages.find((p) => p.slug === params.slug)
       setPkg(foundPackage || null)
     }
-  }, [resolvedParams.slug])
+  }, [params.slug])
 
   if (!pkg) {
     return (
@@ -111,7 +111,7 @@ export default function PackageDetailPage({ params }: { params: Promise<{ slug: 
       <Tabs defaultValue="overview" className="w-full">
          <div className="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
              <div className="container mx-auto px-4">
-                 <TabsList className="w-full justify-start h-auto p-0 bg-transparent gap-6 overflow-x-auto min-w-max md:min-w-0 no-scrollbar">
+                 <TabsList className="w-full justify-start h-auto p-0 bg-transparent gap-6 overflow-x-auto no-scrollbar flex-nowrap">
                     {[
                       { id: "overview", label: "Overview", icon: Info },
                       { id: "itinerary", label: "Itinerary", icon: Map },
@@ -207,8 +207,8 @@ export default function PackageDetailPage({ params }: { params: Promise<{ slug: 
                         </div>
 
                         <div className="space-y-0 relative border-l-2 border-[#E2E8F0] ml-4 md:ml-6">
-                          {pkg.itinerary.map((day) => (
-                            <div key={day.day} className="group pl-8 md:pl-10 pb-10 last:pb-0 relative">
+                          {(isItineraryExpanded ? pkg.itinerary : pkg.itinerary.slice(0, Math.ceil(pkg.itinerary.length / 2))).map((day) => (
+                            <div key={day.day} className="group pl-8 md:pl-10 pb-10 last:pb-0 relative animate-in fade-in slide-in-from-bottom-2 duration-500">
                                {/* Timeline Dot & Badge - FLAMINGO STYLE */}
                                <div className="absolute -left-[11px] top-0 flex items-center justify-center p-1 bg-white">
                                    <div className="bg-[#FF7A00] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm z-10 border border-white">
@@ -243,11 +243,17 @@ export default function PackageDetailPage({ params }: { params: Promise<{ slug: 
                             </div>
                           ))}
                         </div>
-                         <div className="mt-8 text-center">
-                            <Button className="bg-[#FF7A00] hover:bg-[#e65100] text-white rounded-full px-8 py-6 text-sm font-bold shadow-lg shadow-orange-500/20">
-                               View Full Itinerary <ChevronDown className="h-4 w-4 ml-2" />
-                            </Button>
-                         </div>
+                         {pkg.itinerary.length > Math.ceil(pkg.itinerary.length / 2) && (
+                             <div className="mt-8 text-center pt-8 border-t border-gray-100">
+                                <Button 
+                                    onClick={() => setIsItineraryExpanded(!isItineraryExpanded)}
+                                    className="relative z-10 bg-[#FF7A00] hover:bg-[#e65100] text-white rounded-full px-8 py-6 text-sm font-bold shadow-lg shadow-orange-500/20 transition-all hover:scale-105"
+                                >
+                                   {isItineraryExpanded ? "Show Less" : "View Full Itinerary"} 
+                                   <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-300 ${isItineraryExpanded ? "rotate-180" : ""}`} />
+                                </Button>
+                             </div>
+                         )}
                      </div>
                   </TabsContent>
 

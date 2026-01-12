@@ -198,7 +198,7 @@ export interface FAQ {
   category: string
 }
 
-const STORAGE_KEY = "HEADWAY_DATA_V8"
+const STORAGE_KEY = "HEADWAY_DATA_V10"
 
 export function read(): ExplorersData | null {
   if (typeof window === "undefined") return null
@@ -514,7 +514,7 @@ export function seed(): void {
           description: "Experience the royalty of Jaipur, Jodhpur and Udaipur",
           price: 45000,
           duration: "7 Days / 6 Nights",
-          images: ["/placeholder.svg"],
+          images: ["/rajasthan-royal-tour.png"],
           featured: true,
           theme: "maharaj-tour",
           destination: "india",
@@ -523,6 +523,61 @@ export function seed(): void {
           inclusions: ["Heritage Hotels", "Guide", "Transport"],
           exclusions: ["Entry Fees"],
           itinerary: [{ day: 1, title: "Arrival in Jaipur", description: "Pink City Tour" }],
+        },
+        {
+          id: "11",
+          title: "South Africa – Wildlife & Landscapes",
+          slug: "south-africa-wildlife",
+          description: "South Africa is a land of breathtaking contrasts — from thrilling wildlife safaris and dramatic coastlines to vibrant cities and rich cultural heritage.",
+          price: 125000,
+          duration: "8 Days / 7 Nights",
+          images: ["/south-africa-wildlife.png"],
+          featured: true,
+          theme: "exotic-tours",
+          destination: "south-africa",
+          tourCode: "SA008",
+          tourType: "Group",
+          taxes: { gst: 5, tcs: 5 },
+          inclusions: ["Hotels", "Game Drives", "Transfers", "Cape Town City Tour", "Table Mountain"],
+          exclusions: ["Visa", "International Flights", "Personal Expenses"],
+          policies: { cancellation: ["Strict"], payment: ["Standard"], tcs: ["5%"] },
+          itinerary: [
+              { day: 1, title: "Arrival in Johannesburg", description: "Arrive in Johannesburg, meet your local representative and transfer to hotel. Rest and relax after your journey. Overnight stay.", meals: ["Dinner"], overnightCity: "Johannesburg" },
+              { day: 2, title: "Johannesburg – Sun City", description: "Proceed to Sun City, South Africa’s entertainment capital. Enjoy leisure time exploring resorts, casinos, and attractions. Overnight at Sun City.", meals: ["Breakfast", "Dinner"], overnightCity: "Sun City" },
+              { day: 3, title: "Pilanesberg National Park Safari", description: "Enjoy a thrilling morning or afternoon game drive in Pilanesberg National Park, home to the Big Five. Return to hotel. Overnight stay.", meals: ["Breakfast", "Dinner"], overnightCity: "Sun City", highlights: ["Big Five Safari"] },
+              { day: 4, title: "Sun City – Cape Town", description: "Fly to Cape Town. Transfer to hotel and enjoy free time exploring the V&A Waterfront. Overnight stay.", meals: ["Breakfast"], overnightCity: "Cape Town" },
+              { day: 5, title: "Cape Town City Tour", description: "Visit Table Mountain (weather permitting), Company Gardens, Bo-Kaap, and city landmarks. Evening at leisure. Overnight in Cape Town.", meals: ["Breakfast"], overnightCity: "Cape Town", highlights: ["Table Mountain", "Bo-Kaap"] },
+              { day: 6, title: "Cape Peninsula Tour", description: "Full-day tour covering Cape of Good Hope, Cape Point, Boulders Beach (Penguins), and scenic coastal drives. Overnight stay.", meals: ["Breakfast"], overnightCity: "Cape Town", highlights: ["Cape of Good Hope", "Penguins"] },
+              { day: 7, title: "Leisure / Optional Activities", description: "Free day for optional wine tours, helicopter ride, or shopping. Overnight in Cape Town.", meals: ["Breakfast"], overnightCity: "Cape Town" },
+              { day: 8, title: "Departure", description: "Transfer to airport for return journey.", meals: ["Breakfast"], highlights: ["Airport Transfer"] }
+          ],
+        },
+        {
+          id: "12",
+          title: "Vietnam – Nature & Culture",
+          slug: "vietnam-nature",
+          description: "Vietnam is a beautiful blend of ancient traditions, natural wonders, and modern cities. From Halong Bay to historic towns, experience it all.",
+          price: 89000,
+          duration: "7 Days / 6 Nights",
+          images: ["/vietnam-nature-culture.png"],
+          featured: true,
+          theme: "exotic-tours",
+          destination: "vietnam",
+          tourCode: "VN007",
+          tourType: "Group",
+          taxes: { gst: 5, tcs: 5 },
+          inclusions: ["Hotels", "Halong Bay Cruise", "Transfers", "Sightseeing", "Domestic Flights"],
+          exclusions: ["Visa", "International Flights", "Personal Expenses"],
+          policies: { cancellation: ["Standard"], payment: ["Standard"], tcs: ["5%"] },
+          itinerary: [
+              { day: 1, title: "Arrival in Hanoi", description: "Arrive in Hanoi. Transfer to hotel. Evening at leisure or optional old quarter walk. Overnight stay.", meals: ["Dinner"], overnightCity: "Hanoi" },
+              { day: 2, title: "Hanoi City Tour", description: "Visit Ho Chi Minh Mausoleum (outside view), One Pillar Pagoda, Temple of Literature, and enjoy a traditional cyclo ride. Overnight stay.", meals: ["Breakfast", "Lunch", "Dinner"], overnightCity: "Hanoi", highlights: ["City Tour", "Cyclo Ride"] },
+              { day: 3, title: "Hanoi – Halong Bay Cruise", description: "Travel to Halong Bay and board your cruise. Enjoy scenic limestone islands, caves, and onboard activities. Overnight on cruise.", meals: ["Breakfast", "Lunch", "Dinner"], overnightCity: "Halong Bay", highlights: ["Overnight Cruise"] },
+              { day: 4, title: "Halong Bay – Hanoi – Da Nang", description: "Disembark cruise and fly to Da Nang. Transfer to hotel. Overnight stay.", meals: ["Brunch", "Dinner"], overnightCity: "Da Nang" },
+              { day: 5, title: "Ba Na Hills & Golden Bridge", description: "Full-day tour to Ba Na Hills with cable car ride and visit the famous Golden Bridge. Return to hotel. Overnight stay.", meals: ["Breakfast", "Lunch", "Dinner"], overnightCity: "Da Nang", highlights: ["Golden Bridge", "Cable Car"] },
+              { day: 6, title: "Da Nang – Ho Chi Minh City", description: "Fly to Ho Chi Minh City. City tour including War Remnants Museum and city landmarks. Overnight stay.", meals: ["Breakfast", "Dinner"], overnightCity: "Ho Chi Minh City" },
+              { day: 7, title: "Departure", description: "Transfer to airport for return journey.", meals: ["Breakfast"], highlights: ["Airport Transfer"] }
+          ],
         },
       ],
       themes: [
@@ -696,19 +751,25 @@ export function seed(): void {
             id: "10",
             slug: "south-africa",
             name: "South Africa",
-            description: "Wildlife safaris and stunning landscapes",
-            image: "/placeholder.jpg", // Kept as placeholder since not in update list but keeping for structure
+            description: "South Africa is a land of breathtaking contrasts — from thrilling wildlife safaris and dramatic coastlines to vibrant cities and rich cultural heritage. Home to the iconic Big Five, world-class vineyards, and stunning natural beauty.",
+            image: "/placeholder.jpg",
             priceFrom: 125000,
             featured: true,
+            whyVisit: ["Big Five wildlife safaris in Kruger National Park", "Scenic drives along the Garden Route", "Vibrant cities like Cape Town & Johannesburg", "Stunning beaches, mountains & vineyards", "Rich history and diverse cultures"],
+            idealFor: ["Families", "Wildlife lovers", "Nature explorers", "First-time Africa travelers"],
+            popularExperiences: ["Game drives & wildlife safaris", "Table Mountain cable car experience", "Cape Peninsula & Cape of Good Hope tour", "Garden Route scenic journey", "Wine tasting tours"]
         },
         {
              id: "11",
              slug: "vietnam",
              name: "Vietnam",
-             description: "Rich history and beautiful landscapes",
+             description: "Vietnam is a beautiful blend of ancient traditions, natural wonders, and modern cities. From the emerald waters of Halong Bay to historic towns, tropical beaches, and vibrant street life, Vietnam offers an enriching and value-packed international holiday experience.",
              image: "/placeholder.jpg",
              priceFrom: 89000,
              featured: true,
+             whyVisit: ["UNESCO-listed Halong Bay cruise", "Charming cities like Hanoi & Ho Chi Minh", "Scenic landscapes, beaches & islands", "Rich history and cultural heritage", "Affordable yet premium travel experience"],
+             idealFor: ["Couples", "Families", "First-time international travelers", "Culture lovers"],
+             popularExperiences: ["Overnight Halong Bay cruise", "Hanoi & Ho Chi Minh city tours", "Ba Na Hills & Golden Bridge", "Phu Quoc island excursions", "Local markets & cultural shows"]
         }
       ],
       blogs: [

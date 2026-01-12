@@ -7,6 +7,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { read, type Package, type Theme as ThemeType } from "@/lib/storage"
+import { ArrowLeft } from "lucide-react"
 
 export default function ThemeDetailPage() {
   const params = useParams()
@@ -43,7 +44,14 @@ export default function ThemeDetailPage() {
         <Image src={theme.image || "/placeholder.svg"} alt={theme.name} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 font-serif">{theme.name}</h1>
+          <div className="flex items-center justify-center gap-4 mb-6">
+             <Link href="/">
+               <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-full h-12 w-12 [&_svg]:size-6">
+                 <ArrowLeft />
+               </Button>
+             </Link>
+             <h1 className="text-4xl md:text-6xl font-bold font-serif">{theme.name}</h1>
+          </div>
           <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
             {theme.description}
           </p>

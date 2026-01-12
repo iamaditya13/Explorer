@@ -56,24 +56,22 @@ export default function DestinationDetailPage() {
           }}
         />
         
-        {/* Back Button */}
-        <div className="absolute top-8 left-4 md:left-8 z-20">
-          <Link href="/">
-             <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-white/10 gap-2 pl-2 transition-colors">
-                <ArrowLeft className="h-5 w-5" /> Back
-             </Button>
-          </Link>
-        </div>
-
         <div className="relative z-10 container mx-auto px-6 md:px-12 h-full flex items-center">
-          <div className="max-w-[640px] flex flex-col items-start text-left space-y-8">
+          <div className="max-w-[800px] flex flex-col items-start text-left space-y-8">
             
             {/* Title & Description */}
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-[48px] font-bold font-serif text-white leading-tight">
-                {destination.name}
-              </h1>
-              <p className="text-[16px] text-gray-200 leading-[1.7] font-light max-w-lg">
+              <div className="flex items-center gap-4">
+                 <Link href="/">
+                    <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-full h-10 w-10 md:h-12 md:w-12 [&_svg]:size-5 md:[&_svg]:size-6 shrink-0 -ml-2 md:-ml-3">
+                       <ArrowLeft />
+                    </Button>
+                 </Link>
+                 <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold font-serif text-white leading-tight">
+                   {destination.name}
+                 </h1>
+              </div>
+              <p className="text-[16px] text-gray-200 leading-[1.7] font-light max-w-lg ml-0 md:ml-12 border-l-2 border-white/20 pl-4">
                 {destination.description}
               </p>
             </div>

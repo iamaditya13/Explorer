@@ -15,33 +15,19 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Input } from "@/components/ui/input"
-
-// Dummy Data for Themes
-const themes = [
-  { id: 1, name: "Super Saver Tours", tours: "20+", image: "/popular-tourist-destinations-colorful-city.jpg" },
-  { id: 2, name: "Group Tours", tours: "110+", image: "/group-of-tourists-famous-landmarks.jpg" },
-  { id: 3, name: "Honeymoon Packages", tours: "60+", image: "/romantic-couple-beach-sunset-honeymoon.jpg" },
-  { id: 4, name: "Self-Drive Adventures", tours: "5+", image: "/self_drive_tours.png" },
-  { id: 5, name: "Short Break Holidays", tours: "20+", image: "/weekend-getaway-quick-vacation.jpg" },
-  { id: 6, name: "Fixed Departure Tours", tours: "70+", image: "/cruise-ship-deck-ocean-view.jpg" },
-  { id: 7, name: "Maharaj Tours (Indian Chef)", tours: "15+", image: "/luxury-travel-indian-chef-cooking.jpg" },
-  { id: 8, name: "Discovery & Offbeat Tours", tours: "15+", image: "/exotic_tours.png" },
-]
-
-// Dummy Data for Destinations
-const destinations = [
-  { name: "USA", desc: "Iconic cities, natural wonders & world-class entertainment", price: "1,50,000", image: "/usa_travel.png" },
-  { name: "Dubai", desc: "Futuristic skyline, desert safaris & premium shopping", price: "45,000", image: "/blog-dubai.png" },
-  { name: "Japan", desc: "Ancient traditions meets modern innovation", price: "1,80,000", image: "/blog-japan.png" },
-  { name: "Thailand", desc: "Tropical beaches, vibrant nightlife & rich culture", price: "30,000", image: "/southeast-asia-beaches-and-temples.jpg" },
-  { name: "Singapore & Malaysia", desc: "Modern cities, cultural heritage & family fun", price: "65,000", image: "/singapore-cruise-ship-universal-studios.jpg" },
-  { name: "Europe", desc: "Historic cities, romantic landscapes & art", price: "2,50,000", image: "/blog-europe.png" },
-  { name: "Bali", desc: "Tropical paradise with beaches, temples & relaxed vibe", price: "40,000", image: "/romantic-couple-beach-sunset-honeymoon.jpg" },
-  { name: "Australia", desc: "Stunning coastlines, modern cities & wildlife", price: "1,80,000", image: "/australia_travel.png" },
-  { name: "New Zealand", desc: "Dramatic landscapes, peaceful environment & adventure", price: "2,80,000", image: "/new-zealand-mountains-and-lakes-milford-sound.jpg" },
-]
+import { read, type Theme, type Destination } from "@/lib/storage"
 
 export default function HomePage() {
+  const [themes, setThemes] = useState<Theme[]>([])
+  const [destinations, setDestinations] = useState<Destination[]>([])
+
+  useEffect(() => {
+    const data = read()
+    if (data) {
+      setThemes(data.siteContent.themes)
+      setDestinations(data.siteContent.destinations.filter(d => d.featured))
+    }
+  }, [])
   return (
     <div className="font-sans text-gray-900">
       
@@ -104,7 +90,7 @@ export default function HomePage() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white text-left">
                               <h3 className="font-bold text-2xl mb-1">{theme.name}</h3>
-                              <p className="text-sm opacity-80 font-medium">{theme.tours} Tours</p>
+                              <p className="text-sm opacity-80 font-medium">{theme.tourCount}+ Tours</p>
                             </div>
                           </CardContent>
                         </Card>
@@ -211,7 +197,7 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {destinations.map((dest, idx) => (
-              <Link href={`/destinations/${dest.name.toLowerCase().replace(/ /g, '-')}`} key={idx} className="group">
+              <Link href={`/destinations/${dest.slug}`} key={idx} className="group">
                 <Card className="h-full border-none shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 rounded-3xl">
                   <div className="relative h-72 overflow-hidden">
                     <Image
@@ -228,10 +214,10 @@ export default function HomePage() {
                     <div className="flex justify-between items-start mb-2">
                          <h3 className="font-bold text-2xl text-[#0a3d62] font-serif group-hover:text-[#ff6b35] transition-colors">{dest.name}</h3>
                     </div>
-                    <p className="text-base text-gray-600 mb-6 line-clamp-2">{dest.desc}</p>
+                    <p className="text-base text-gray-600 mb-6 line-clamp-2">{dest.description}</p>
                     <div className="flex items-center justify-between pt-6 border-t border-gray-100">
                       <span className="text-sm text-gray-500 uppercase font-semibold">Starts From</span>
-                      <span className="text-xl font-bold text-[#ff6b35]">₹ {dest.price}</span>
+                      <span className="text-xl font-bold text-[#ff6b35]">₹ {dest.priceFrom.toLocaleString("en-IN")}</span>
                     </div>
                   </CardContent>
                 </Card>
