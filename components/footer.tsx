@@ -80,7 +80,7 @@ export function Footer() {
         {/* Footer Bottom */}
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-gray-400 text-sm">
-            &copy; 2026 Headway Travels Pvt. Ltd. All Rights Reserved.
+            &copy; 2026 Headway Travels Pvt. Ltd. All Rights Reserved. <span className="ml-2 px-2 py-0.5 bg-gray-800 rounded text-xs text-gray-500">v1.1</span>
           </div>
           <div className="flex gap-4">
             <Link href="#" className="p-2 bg-gray-800 rounded-full hover:bg-[#ff6b35] transition-colors text-white">
